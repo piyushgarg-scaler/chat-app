@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import "./app.css";
+import "./style.css";
 
 import LobbyPage from "./pages/Lobby";
 import ChatPage from "./pages/Chat";
