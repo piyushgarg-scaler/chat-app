@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Input } from "antd";
 import Pubnub from "pubnub";
@@ -19,6 +19,8 @@ const ChatPage: React.FC = () => {
   const [typedMessage, setTypedMessage] = useState<string>("");
   const [messages, setMessages] = useState<Pubnub.MessageEvent[]>([]);
 
+  const messageContainer = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (roomCode) {
       console.log(`Subscribe to ${roomCode}`);
@@ -34,6 +36,13 @@ const ChatPage: React.FC = () => {
       };
     }
   }, [roomCode]);
+
+  useEffect(() => {
+    if (messages && messageContainer.current) {
+      messageContainer.current.scrollTop =
+        messageContainer.current.scrollHeight;
+    }
+  }, [messages]);
 
   useEffect(() => {
     if (roomCode) {
@@ -63,7 +72,7 @@ const ChatPage: React.FC = () => {
   return (
     <div>
       <h1>Chat App {roomCode}</h1>
-      <div className="messages">
+      <div ref={messageContainer} className="messages">
         {messages.map((message) => (
           <div
             className={message.publisher === myID ? "my-message" : ""}
@@ -83,6 +92,7 @@ const ChatPage: React.FC = () => {
       >
         <Input
           value={typedMessage}
+          onPressEnter={handleSendMessage}
           onChange={(e) => setTypedMessage(e.target.value)}
           placeholder="Type your message here..."
         />
