@@ -1,0 +1,22 @@
+.messages {
+  padding: 10px;
+  height: 70vh;
+  overflow-y: auto;
+}
+
+.messages div {
+  border: 2px solid #9c27b0;
+  background-color: #9c27b0;
+  margin: 5px 0px;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  width: fit-content;
+  clear: both;
+}
+
+.messages .my-message {
+  background-color: blue;
+  border: 2px solid blue;
+  float: right;
+}
